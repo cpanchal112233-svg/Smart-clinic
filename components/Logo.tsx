@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 
-const gradId = "logo-grad";
-const glowId = "logo-glow";
-const filterId = "logo-glow-filter";
+const prismBlueId = "logo-prism-blue";
+const prismIndigoId = "logo-prism-indigo";
+const prismCyanId = "logo-prism-cyan";
+const softGlowId = "logo-soft-glow";
 
 export function Logo({ animated = true, className = "" }: { animated?: boolean; className?: string }) {
   return (
@@ -17,57 +18,34 @@ export function Logo({ animated = true, className = "" }: { animated?: boolean; 
         className={`inline-flex shrink-0 [&_svg]:h-9 [&_svg]:w-9 [&_svg]:sm:h-10 [&_svg]:sm:w-10 ${animated ? "logo-root" : ""}`}
         aria-hidden
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" className="logo-svg">
+        <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-svg">
           <defs>
-            <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#2563EB" />
-              <stop offset="100%" stopColor="#1D4ED8" />
-            </linearGradient>
-            <linearGradient id={glowId} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#93C5FD" />
+            <linearGradient id={prismBlueId} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#0EA5E9" />
               <stop offset="100%" stopColor="#2563EB" />
             </linearGradient>
-            <filter id={filterId}>
-              <feGaussianBlur stdDeviation="1.2" result="blur" />
+            <linearGradient id={prismIndigoId} x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6366F1" />
+              <stop offset="100%" stopColor="#4F46E5" />
+            </linearGradient>
+            <linearGradient id={prismCyanId} x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stopColor="#22D3EE" />
+              <stop offset="100%" stopColor="#0891B2" />
+            </linearGradient>
+            <filter id={softGlowId} x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="12" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
-          {/* Orbital ring - draws in */}
-          <circle
-            className={animated ? "logo-ring" : ""}
-            cx="24"
-            cy="24"
-            r="20"
-            stroke={`url(#${gradId})`}
-            strokeWidth="1.2"
-            fill="none"
-            strokeLinecap="round"
-            pathLength={1}
-            strokeDasharray={1}
-            strokeDashoffset={animated ? 1 : 0}
-          />
-          {/* Flowing pulse line - draws in after ring */}
-          <path
-            className={animated ? "logo-pulse-line" : ""}
-            d="M8 24c0 0 4-10 8-4s4 14 8 8 8-10 8-4"
-            stroke={`url(#${gradId})`}
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            pathLength={1}
-            strokeDasharray={1}
-            strokeDashoffset={animated ? 1 : 0}
-          />
-          {/* Core orb - glows and scales */}
-          <circle
-            className={animated ? "logo-core" : ""}
-            cx="24"
-            cy="24"
-            r="4"
-            fill={`url(#${glowId})`}
-            filter={`url(#${filterId})`}
-          />
+          <path d="M256 40L442 148V364L256 472L70 364V148L256 40Z" fill="#F8FAFC" fillOpacity="0.05" stroke="#E2E8F0" strokeWidth="2" />
+          <rect x="216" y="112" width="80" height="288" rx="12" fill={`url(#${prismBlueId})`} fillOpacity="0.9" />
+          <rect x="112" y="216" width="288" height="80" rx="12" fill={`url(#${prismIndigoId})`} fillOpacity="0.8" />
+          <rect x="216" y="216" width="80" height="80" rx="8" fill={`url(#${prismCyanId})`} filter={`url(#${softGlowId})`} className={animated ? "logo-core" : ""} />
+          <circle cx="256" cy="256" r="210" stroke="#CBD5E1" strokeWidth="1" strokeDasharray="4 12" />
+          <circle cx="256" cy="256" r="240" stroke="#94A3B8" strokeWidth="0.5" />
+          <circle cx="442" cy="148" r="6" fill="#22D3EE" />
+          <circle cx="70" cy="364" r="6" fill="#6366F1" />
+          <circle cx="256" cy="40" r="4" fill="#2563EB" />
         </svg>
       </span>
       <span className="text-xl tracking-tight text-[#2563EB]">SmartClinic</span>

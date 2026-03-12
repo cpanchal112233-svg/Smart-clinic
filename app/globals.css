@@ -28,32 +28,14 @@ body {
   }
 }
 
-/* SmartClinic logo – futuristic animated mark */
+/* SmartClinic logo – crystalline cross + data pulse rings */
 .logo-root .logo-svg {
-  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.3));
-}
-.logo-root .logo-ring {
-  animation: logo-draw 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
-}
-.logo-root .logo-pulse-line {
-  animation: logo-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.2));
 }
 .logo-root .logo-core {
-  animation: logo-glow 2.5s ease-in-out 1s infinite;
-  transform-origin: 24px 24px;
+  animation: logo-core-pulse 3s ease-in-out infinite;
 }
-@keyframes logo-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes logo-glow {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.14);
-  }
+@keyframes logo-core-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
 }
