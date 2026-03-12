@@ -1,11 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-const prismBlueId = "logo-prism-blue";
-const prismIndigoId = "logo-prism-indigo";
-const prismCyanId = "logo-prism-cyan";
-const softGlowId = "logo-soft-glow";
+import { useId } from "react";
 
 export function Logo({
   animated = true,
@@ -16,6 +12,12 @@ export function Logo({
   showWordmark?: boolean;
   className?: string;
 }) {
+  const id = useId().replace(/:/g, "");
+  const prismBlueId = `logo-prism-blue-${id}`;
+  const prismIndigoId = `logo-prism-indigo-${id}`;
+  const prismCyanId = `logo-prism-cyan-${id}`;
+  const softGlowId = `logo-soft-glow-${id}`;
+
   return (
     <Link
       href="/"
@@ -23,10 +25,20 @@ export function Logo({
       aria-label="SmartClinic – Home"
     >
       <span
-        className={`inline-flex shrink-0 [&_svg]:h-9 [&_svg]:w-9 [&_svg]:sm:h-10 [&_svg]:sm:w-10 ${animated ? "logo-root" : ""}`}
+        className={`inline-flex shrink-0 ${animated ? "logo-root" : ""}`}
+        style={{ width: 44, height: 44 }}
         aria-hidden
       >
-        <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-svg">
+        <svg
+          viewBox="0 0 512 512"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="logo-svg block h-full w-full"
+          width="44"
+          height="44"
+          role="img"
+          aria-hidden
+        >
           <defs>
             <linearGradient id={prismBlueId} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#0EA5E9" />
