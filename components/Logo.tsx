@@ -7,11 +7,19 @@ const prismIndigoId = "logo-prism-indigo";
 const prismCyanId = "logo-prism-cyan";
 const softGlowId = "logo-soft-glow";
 
-export function Logo({ animated = true, className = "" }: { animated?: boolean; className?: string }) {
+export function Logo({
+  animated = true,
+  showWordmark = true,
+  className = "",
+}: {
+  animated?: boolean;
+  showWordmark?: boolean;
+  className?: string;
+}) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-2.5 font-semibold text-text no-underline ${className}`}
+      className={`inline-flex items-center font-semibold text-text no-underline ${showWordmark ? "gap-2.5" : ""} ${className}`}
       aria-label="SmartClinic – Home"
     >
       <span
@@ -48,7 +56,7 @@ export function Logo({ animated = true, className = "" }: { animated?: boolean; 
           <circle cx="256" cy="40" r="4" fill="#2563EB" />
         </svg>
       </span>
-      <span className="text-xl tracking-tight text-[#2563EB]">SmartClinic</span>
+      {showWordmark && <span className="text-xl tracking-tight text-[#2563EB]">SmartClinic</span>}
     </Link>
   );
 }
