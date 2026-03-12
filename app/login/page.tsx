@@ -25,7 +25,13 @@ function LoginForm() {
     });
     setLoading(false);
     if (result?.error) {
-      setError(result.error);
+      const msg =
+        result.error === "CredentialsSignin"
+          ? "Invalid email or password."
+          : result.error === "Configuration"
+          ? "Server configuration error. Ensure NEXTAUTH_SECRET is set in Vercel and redeploy."
+          : result.error;
+      setError(msg);
       return;
     }
     if (result?.ok) {
