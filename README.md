@@ -42,6 +42,18 @@ A digital clinic system with a public website, appointment booking, patient port
 
    Open **http://localhost:3000** in your browser (or the port shown in the terminal, e.g. 3001 if 3000 is in use).
 
+## Deploying on Vercel
+
+If buttons/links show errors or signup fails, you need **environment variables** and the **database schema**. See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for step-by-step instructions. In short:
+
+1. Add a Postgres database (Vercel Postgres or Neon) and connect it to your project.
+2. Run **`lib/postgres-schema.sql`** in that database’s SQL editor.
+3. In Vercel → Settings → Environment Variables, set:
+   - **`POSTGRES_URL`** – your Postgres connection string
+   - **`NEXTAUTH_SECRET`** – e.g. `openssl rand -base64 32`
+   - **`NEXTAUTH_URL`** – your live URL, e.g. `https://your-app.vercel.app` (not localhost)
+4. Redeploy the project.
+
 ## Creating an admin user
 
 New signups get role `patient` by default. To make a user an admin:

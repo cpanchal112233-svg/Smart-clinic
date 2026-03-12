@@ -13,12 +13,13 @@ export async function POST(
   const { id } = await params;
   const userId = (session.user as { id: string }).id;
 
-  const { rowCount } = await sql`
+  const { rows } = await sql`
     update appointments
     set status = 'cancelled'
     where id = ${id}::uuid and patient_id = ${userId}::uuid
+    returning id
   `;
-  if (rowCount === 0) {
+  if (rows.length === 0) {
     return NextResponse.json({ error: "Appointment not found or not yours" }, { status: 404 });
   }
   return NextResponse.json({ ok: true });
