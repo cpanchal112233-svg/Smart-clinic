@@ -13,7 +13,8 @@ A digital clinic system with a public website, appointment booking, patient port
 1. **Clone and install**
 
    ```bash
-   cd "second demo (smart cleanic)"
+   git clone https://github.com/cpanchal112233-svg/Smart-clinic.git
+   cd Smart-clinic
    npm install
    ```
 
