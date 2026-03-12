@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartClinic – One-word logo preview</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      padding: 2rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    h2 {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .preview {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    /* Option A: Bold wordmark, gradient, slight letter-spacing */
+    .logo-a {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #93C5FD 0%, #2563EB 50%, #1D4ED8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* Option B: Clean, single color, tight tracking */
+    .logo-b {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #2563EB;
+    }
+    /* Option C: Futuristic – “Smart” lighter, “Clinic” bolder (one word: SmartClinic) */
+    .logo-c {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+    .logo-c span { color: #93C5FD; font-weight: 500; }
+    .logo-c strong { color: #2563EB; font-weight: 800; }
+    /* Option D: Gradient with subtle glow */
+    .logo-d {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #2563EB, #93C5FD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.4));
+    }
+    .note {
+      color: #64748b;
+      font-size: 0.85rem;
+      text-align: center;
+      max-width: 320px;
+    }
+  </style>
+</head>
+<body>
+  <h2>One-word logo preview</h2>
+  <div class="preview">
+    <div>
+      <p style="color:#64748b;font-size:0.75rem;margin-bottom:0.5rem">A – Gradient wordmark</p>
+      <div class="logo-a">SmartClinic</div>
+    </div>
+    <div>
+      <p style="color:#64748b;font-size:0.75rem;margin-bottom:0.5rem">B – Solid blue</p>
+      <div class="logo-b">SmartClinic</div>
+    </div>
+    <div>
+      <p style="color:#64748b;font-size:0.75rem;margin-bottom:0.5rem">C – Two-tone (Smart / Clinic)</p>
+      <div class="logo-c"><span>Smart</span><strong>Clinic</strong></div>
+    </div>
+    <div>
+      <p style="color:#64748b;font-size:0.75rem;margin-bottom:0.5rem">D – Gradient + glow</p>
+      <div class="logo-d">SmartClinic</div>
+    </div>
+  </div>
+  <p class="note">Open this file in your browser (e.g. public/logo-preview.html). Tell me which option (A–D) you like, or how you’d like it changed.</p>
+</body>
+</html>
