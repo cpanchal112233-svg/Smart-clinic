@@ -1,0 +1,194 @@
+================================================================================
+  SMARTCLINIC – WHOLE APP OVERVIEW (TEXT FILE)
+================================================================================
+
+Project name:    smartclinic
+Version:         0.1.0
+Repo:            https://github.com/cpanchal112233-svg/Smart-clinic.git
+
+--------------------------------------------------------------------------------
+1. WHAT THE APP IS
+--------------------------------------------------------------------------------
+
+SmartClinic is a digital clinic system with:
+  - A public website (home, services, doctors, book appointment)
+  - Patient portal (dashboard, appointments, profile)
+  - Admin/doctor dashboard (appointments, doctors, queue)
+
+Tech stack:
+  - Frontend:  Next.js 14 (App Router), TypeScript, Tailwind CSS
+  - Backend:   Next.js API routes, NextAuth (Credentials)
+  - Database:  Postgres via Neon serverless (@neondatabase/serverless)
+  - Auth:      NextAuth with email/password, roles: patient, admin, doctor
+
+--------------------------------------------------------------------------------
+2. ENVIRONMENT VARIABLES
+--------------------------------------------------------------------------------
+
+Required (copy from env.template to .env.local for local; set in Vercel for deploy):
+
+  DATABASE_URL   or  POSTGRES_URL
+    Postgres connection string from Neon or Vercel Postgres.
+    Example: postgresql://user:password@host/db?sslmode=require
+
+  NEXTAUTH_SECRET
+    Long random string. Generate with: openssl rand -base64 32
+
+  NEXTAUTH_URL   (optional on Vercel)
+    Full app URL, no trailing slash.
+    Local: http://localhost:3000
+    Production: https://your-app.vercel.app
+
+--------------------------------------------------------------------------------
+3. DATABASE (POSTGRES)
+--------------------------------------------------------------------------------
+
+Schema file:  lib/postgres-schema.sql
+
+Run the entire contents of that file once in your Postgres SQL editor (Neon SQL Editor or Vercel Postgres Query).
+
+Tables created:
+  - profiles       (id, full_name, email, password_hash, role, phone, avatar_url, created_at, updated_at)
+  - services       (id, name, description, duration_minutes, price, is_active, created_at)
+  - doctors        (id, profile_id, specialty, bio, is_available, created_at)
+  - doctor_schedules (id, doctor_id, day_of_week, start_time, end_time, created_at)
+  - appointments   (id, patient_id, doctor_id, service_id, appointment_date, appointment_time, status, notes, created_at)
+  - queue_entries  (id, appointment_id, queue_number, status, checked_in_at, created_at)
+  - notifications (id, user_id, title, message, type, is_read, created_at)
+
+Roles in profiles:  patient | admin | doctor
+
+--------------------------------------------------------------------------------
+4. PROJECT STRUCTURE (FOLDERS & FILES)
+--------------------------------------------------------------------------------
+
+app/
+  layout.tsx              Root layout (Header, Footer, SessionProvider)
+  page.tsx                 Homepage
+  globals.css              Global styles, Tailwind, logo animation
+  error.tsx                Route-level error boundary
+  global-error.tsx         Root error boundary
+  icon.png                 Favicon (from logo)
+
+  services/page.tsx        Public: list services
+  doctors/page.tsx         Public: list doctors
+  book/page.tsx            Public: book appointment flow
+  book/confirmation/page.tsx   After booking confirmation
+
+  login/page.tsx           Sign in
+  login/success/page.tsx   Post-login redirect handler
+  signup/page.tsx          Register
+
+  patient/
+    dashboard/page.tsx     Patient dashboard
+    appointments/page.tsx  Patient appointments list
+    profile/page.tsx       Patient profile (with ProfileForm)
+
+  admin/
+    dashboard/page.tsx    Admin dashboard
+    appointments/page.tsx Admin appointments (UpdateStatusForm, StatusFilter)
+    doctors/page.tsx       Admin: doctors list
+    queue/page.tsx         Admin: queue (AddToQueueButton, QueueActions)
+
+  api/
+    auth/[...nextauth]/route.ts   NextAuth handler
+    auth/signup/route.ts          Signup API
+    health/route.ts               Health check (env + DB)
+    profile/route.ts             GET/PATCH profile
+    appointments/route.ts         GET/POST appointments
+    appointments/[id]/cancel/route.ts
+    appointments/[id]/status/route.ts
+    slots/route.ts                Available time slots
+    admin/queue/add/route.ts
+    admin/queue/update/route.ts
+
+components/
+  layout/Header.tsx        Top nav (Logo, nav links, session menu)
+  layout/Footer.tsx        Footer with links and Logo
+  Logo.tsx                Animated logo (orbital mark + SmartClinic wordmark)
+  SessionProvider.tsx      NextAuth SessionProvider (dynamic, ssr: false)
+  booking/BookingFlow.tsx  Booking wizard
+  patient/profile/ProfileForm.tsx
+  patient/appointments/CancelButton.tsx
+  admin/appointments/UpdateStatusForm.tsx
+  admin/appointments/StatusFilter.tsx
+  admin/queue/AddToQueueButton.tsx
+  admin/queue/QueueActions.tsx
+
+lib/
+  db.ts                   Neon SQL helper (sql`...` returns { rows, rowCount })
+  auth.ts                 NextAuth options, getServerSession
+  postgres-schema.sql      Full DB schema
+
+public/
+  logo.svg                Logo mark (SVG)
+  logo.png                Logo 192x192 (generated)
+  logo-preview.html       One-word logo preview (A–D options)
+
+scripts/
+  generate-logo-png.mjs    Generates public/logo.png and app/icon.png from logo.svg
+
+middleware.ts             NextAuth matcher (excludes static, api/auth, images)
+
+--------------------------------------------------------------------------------
+5. NPM SCRIPTS
+--------------------------------------------------------------------------------
+
+  npm run dev         Start dev server (Next.js)
+  npm run build       Production build
+  npm run start       Start production server
+  npm run lint        Run ESLint
+  npm run build:logo  Generate logo.png and app/icon.png from public/logo.svg
+
+--------------------------------------------------------------------------------
+6. KEY FEATURES (MVP)
+--------------------------------------------------------------------------------
+
+  - Patient sign up / sign in (NextAuth Credentials, bcrypt)
+  - Book appointment: choose service → doctor → date → time → confirm
+  - Appointments stored in DB; patient sees dashboard and history
+  - Admin: view appointments, update status (booked, confirmed, checked_in, completed, cancelled)
+  - Queue: check in, add to queue, mark in progress / completed
+  - Homepage, services, doctors, booking, login, signup, patient dashboard, profile
+  - Error boundaries and /api/health for deployment debugging
+
+--------------------------------------------------------------------------------
+7. CREATING AN ADMIN USER
+--------------------------------------------------------------------------------
+
+  1. Sign up a user (e.g. admin@clinic.com).
+  2. In the database, open table "profiles" and set that user's "role" to "admin".
+  3. Sign in; "Admin" link appears in the header.
+
+--------------------------------------------------------------------------------
+8. CREATING DOCTORS
+--------------------------------------------------------------------------------
+
+  1. Create a user (or use existing) and set role to "doctor" in profiles.
+  2. In table "doctors", insert a row: profile_id = that user's id, specialty, bio.
+  3. In "doctor_schedules", add rows: doctor_id, day_of_week (0–6), start_time, end_time.
+
+--------------------------------------------------------------------------------
+9. DEPLOYMENT (VERCEL)
+--------------------------------------------------------------------------------
+
+  1. Connect GitHub repo to Vercel.
+  2. Add Postgres (Neon or Vercel Postgres); run lib/postgres-schema.sql.
+  3. In Vercel → Settings → Environment Variables set:
+       DATABASE_URL (or POSTGRES_URL), NEXTAUTH_SECRET, optionally NEXTAUTH_URL.
+  4. Redeploy. Check https://your-app.vercel.app/api/health for env/DB status.
+
+  See DEPLOYMENT.md for full steps.
+
+--------------------------------------------------------------------------------
+10. LOGO ASSETS
+--------------------------------------------------------------------------------
+
+  - public/logo.svg       Source logo (used by app and by build:logo)
+  - public/logo.png      192x192 PNG (npm run build:logo)
+  - app/icon.png          32x32 favicon (npm run build:logo)
+  - public/logo-preview.html   One-word logo preview options (A–D)
+
+================================================================================
+  END OF SMARTCLINIC APP OVERVIEW
+================================================================================

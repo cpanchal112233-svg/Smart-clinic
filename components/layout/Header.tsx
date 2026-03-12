@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { Logo } from "@/components/Logo";
 
 const publicNav = [
   { href: "/", label: "Home" },
@@ -23,9 +23,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <div className="flex min-w-[2.75rem] items-center">
-          <Logo showWordmark={false} />
-        </div>
+        <Link href="/" className="flex shrink-0 items-center" aria-label="SmartClinic – Home">
+          <Image src="/logo.png" alt="SmartClinic" width={44} height={44} className="block" priority />
+        </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {publicNav.map(({ href, label }) => (
             <Link
