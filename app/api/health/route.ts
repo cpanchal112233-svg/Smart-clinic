@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { neon } from "@neondatabase/serverless";
 
+/** Force dynamic so health always runs at request time with real env (not build-time static). */
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/health – use this to see why the app might be failing on Vercel.
  * Open https://your-app.vercel.app/api/health in the browser.
