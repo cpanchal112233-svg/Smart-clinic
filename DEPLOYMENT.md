@@ -47,7 +47,7 @@ You should see success (tables created). If you get “already exists” that’
 |------|--------|--------|
 | `DATABASE_URL` or `POSTGRES_URL` | Your Postgres connection string | Neon: use the pooler URL (e.g. from Neon dashboard). Vercel: add as `DATABASE_URL` or `POSTGRES_URL`. Either name works. |
 | `NEXTAUTH_SECRET` | A long random string | e.g. run `openssl rand -base64 32` locally and paste the result. |
-| `NEXTAUTH_URL` | **Your live app URL** | e.g. `https://smart-clinic-xyz.vercel.app` (no trailing slash). **Must not be localhost.** |
+| `NEXTAUTH_URL` | **Your live app URL** (optional on Vercel) | e.g. `https://smart-clinic-xyz.vercel.app` (no trailing slash). On Vercel, NextAuth can use `VERCEL_URL` automatically if you leave this unset. |
 
 4. Save. **Redeploy** the project (Deployments → … on latest deployment → **Redeploy**), or push a small commit so Vercel redeploys. Env vars are applied on the next build/deploy.
 

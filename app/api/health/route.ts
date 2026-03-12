@@ -16,8 +16,9 @@ export async function GET() {
   checks.NEXTAUTH_SECRET = !!process.env.NEXTAUTH_SECRET;
   if (!process.env.NEXTAUTH_SECRET) ok = false;
 
-  checks.NEXTAUTH_URL = !!process.env.NEXTAUTH_URL;
-  if (!process.env.NEXTAUTH_URL) ok = false;
+  const authUrl = process.env.NEXTAUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null);
+  checks.NEXTAUTH_URL_or_VERCEL_URL = !!authUrl;
+  if (!authUrl) ok = false;
 
   if (dbUrl) {
     try {
