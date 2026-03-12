@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 
 const links = [
   { href: "/services", label: "Services" },
@@ -12,7 +13,7 @@ export function Footer() {
     <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <span className="font-semibold text-primary">SmartClinic</span>
+          <Logo animated={false} className="text-base" />
           <nav className="flex flex-wrap justify-center gap-6">
             {links.map(({ href, label }) => (
               <Link
