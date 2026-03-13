@@ -111,10 +111,6 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
     router.refresh();
   };
 
-  if (status === "loading") {
-    return <div className="card mt-8 p-8 text-center text-text-muted">Loading…</div>;
-  }
-
   const nextDisabled =
     (step === 0 && !serviceId) ||
     (step === 1 && !doctorId) ||

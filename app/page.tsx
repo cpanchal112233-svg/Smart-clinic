@@ -1,6 +1,32 @@
 import Link from "next/link";
+import { sql } from "@/lib/db";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+const FALLBACK_SERVICES = [
+  { id: "fallback-1", name: "General Checkup", description: "Routine health assessment and preventive care.", duration_minutes: 30, price: 50 },
+  { id: "fallback-2", name: "Consultation", description: "One-on-one time with your doctor to discuss concerns.", duration_minutes: 20, price: 75 },
+  { id: "fallback-3", name: "Follow-up", description: "Track progress and adjust treatment as needed.", duration_minutes: 15, price: 40 },
+];
+
+async function getServices() {
+  try {
+    const { rows } = await sql`
+      select id, name, description, duration_minutes, price
+      from services
+      where is_active = true
+      order by name
+    `;
+    return (rows as { id: string; name: string; description: string | null; duration_minutes: number; price: number | null }[]) || [];
+  } catch {
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const services = await getServices();
+  const displayServices = services.length > 0 ? services : FALLBACK_SERVICES;
+
   return (
     <div>
       {/* Hero */}
@@ -37,7 +63,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services - all from DB or fallback */}
       <section className="bg-background px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-2xl font-semibold text-text sm:text-3xl">
@@ -47,28 +73,18 @@ export default function HomePage() {
             From checkups to consultations, we offer a range of services.
           </p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "General Checkup",
-                desc: "Routine health assessment and preventive care.",
-              },
-              {
-                title: "Consultation",
-                desc: "One-on-one time with your doctor to discuss concerns.",
-              },
-              {
-                title: "Follow-up",
-                desc: "Track progress and adjust treatment as needed.",
-              },
-            ].map((s) => (
-              <div key={s.title} className="card">
-                <h3 className="font-semibold text-text">{s.title}</h3>
-                <p className="mt-2 text-sm text-text-muted">{s.desc}</p>
+            {displayServices.map((s) => (
+              <div key={s.id} className="card">
+                <h3 className="font-semibold text-text">{s.name}</h3>
+                <p className="mt-2 text-sm text-text-muted">{s.description ?? ""}</p>
+                <div className="mt-2 text-xs text-text-muted">
+                  {s.duration_minutes} min{s.price != null && ` · $${Number(s.price).toFixed(0)}`}
+                </div>
                 <Link
-                  href="/services"
+                  href={s.id.startsWith("fallback") ? "/services" : `/book?service=${s.id}`}
                   className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
                 >
-                  Learn more →
+                  {s.id.startsWith("fallback") ? "Learn more →" : "Book →"}
                 </Link>
               </div>
             ))}
