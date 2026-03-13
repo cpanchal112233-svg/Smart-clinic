@@ -80,9 +80,5 @@ create table if not exists notifications (
   created_at timestamptz default now()
 );
 
--- Optional seed
--- insert into services (name, description, duration_minutes, price) values
---   ('General Checkup', 'Routine health assessment', 30, 50),
---   ('Consultation', 'One-on-one consultation', 20, 75),
---   ('Follow-up', 'Follow-up visit', 15, 40)
--- on conflict do nothing;
+-- Optional: seed many services (run lib/seed-services.sql once in Neon SQL Editor
+-- to populate the Services page and Book appointment "Choose service" step.)

@@ -23,11 +23,12 @@ export default async function AdminAppointmentsPage({
   const { status } = await searchParams;
   let query = sql`
     select a.id, a.appointment_date, a.appointment_time, a.status,
-           pat.full_name as patient_name, pat.email as patient_email,
+           coalesce(pat.full_name, a.guest_name) as patient_name,
+           coalesce(pat.email, a.guest_email) as patient_email,
            docp.full_name as doctor_name, d.specialty,
            s.name as service_name
     from appointments a
-    join profiles pat on pat.id = a.patient_id
+    left join profiles pat on pat.id = a.patient_id
     join doctors d on d.id = a.doctor_id
     join profiles docp on docp.id = d.profile_id
     join services s on s.id = a.service_id
@@ -37,11 +38,12 @@ export default async function AdminAppointmentsPage({
   if (status && status !== "all") {
     query = sql`
       select a.id, a.appointment_date, a.appointment_time, a.status,
-             pat.full_name as patient_name, pat.email as patient_email,
+             coalesce(pat.full_name, a.guest_name) as patient_name,
+             coalesce(pat.email, a.guest_email) as patient_email,
              docp.full_name as doctor_name, d.specialty,
              s.name as service_name
       from appointments a
-      join profiles pat on pat.id = a.patient_id
+      left join profiles pat on pat.id = a.patient_id
       join doctors d on d.id = a.doctor_id
       join profiles docp on docp.id = d.profile_id
       join services s on s.id = a.service_id

@@ -41,8 +41,12 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [profile, setProfile] = useState<{ full_name: string; email: string; phone: string | null } | null>(null);
+  const [guestName, setGuestName] = useState("");
+  const [guestEmail, setGuestEmail] = useState("");
+  const [guestPhone, setGuestPhone] = useState("");
 
   const user = session?.user;
+  const isGuest = !user;
 
   useEffect(() => {
     if (!user?.id) {
@@ -70,18 +74,32 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
   const selectedDoctor = doctors.find((d) => d.id === doctorId);
 
   const handleConfirm = async () => {
-    if (!user?.id || !serviceId || !doctorId || !date || !time) return;
+    if (!serviceId || !doctorId || !date || !time) return;
+    if (user) {
+      if (!user.id) return;
+    } else {
+      if (!guestName.trim() || !guestEmail.trim()) {
+        alert("Please enter your name and email.");
+        return;
+      }
+    }
     setSubmitting(true);
+    const body: Record<string, unknown> = {
+      service_id: serviceId,
+      doctor_id: doctorId,
+      appointment_date: date,
+      appointment_time: time,
+      notes: notes || null,
+    };
+    if (isGuest) {
+      body.guest_name = guestName.trim();
+      body.guest_email = guestEmail.trim();
+      body.guest_phone = guestPhone.trim() || null;
+    }
     const res = await fetch("/api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        service_id: serviceId,
-        doctor_id: doctorId,
-        appointment_date: date,
-        appointment_time: time,
-        notes: notes || null,
-      }),
+      body: JSON.stringify(body),
     });
     const data = await res.json().catch(() => ({}));
     setSubmitting(false);
@@ -97,27 +115,12 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
     return <div className="card mt-8 p-8 text-center text-text-muted">Loading…</div>;
   }
 
-  if (!user) {
-    return (
-      <div className="card mt-8 text-center">
-        <p className="text-text-muted">Please sign in to book an appointment.</p>
-        <div className="mt-4 flex justify-center gap-4">
-          <Link href={`/login?redirect=${encodeURIComponent("/book")}`} className="btn-primary">
-            Sign in
-          </Link>
-          <Link href="/signup" className="btn-secondary">
-            Sign up
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   const nextDisabled =
     (step === 0 && !serviceId) ||
     (step === 1 && !doctorId) ||
     (step === 2 && !date) ||
-    (step === 3 && !time);
+    (step === 3 && !time) ||
+    (step === 4 && isGuest && (!guestName.trim() || !guestEmail.trim()));
 
   const dates = (() => {
     const out: string[] = [];
@@ -256,16 +259,68 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
         {step === 4 && (
           <div>
             <h2 className="font-semibold text-text">Your details</h2>
-            <p className="mt-2 text-sm text-text-muted">
-              We&apos;ll use your profile. Add any notes for the doctor below.
-            </p>
-            <div className="mt-4 rounded-lg bg-slate-50 p-4">
-              <p className="font-medium">{profile?.full_name ?? user?.name}</p>
-              <p className="text-sm text-text-muted">{profile?.email ?? user?.email}</p>
-              {profile?.phone && (
-                <p className="text-sm text-text-muted">{profile.phone}</p>
-              )}
-            </div>
+            {user ? (
+              <>
+                <p className="mt-2 text-sm text-text-muted">
+                  We&apos;ll use your profile. Add any notes for the doctor below.
+                </p>
+                <div className="mt-4 rounded-lg bg-slate-50 p-4">
+                  <p className="font-medium">{profile?.full_name ?? user?.name}</p>
+                  <p className="text-sm text-text-muted">{profile?.email ?? user?.email}</p>
+                  {profile?.phone && (
+                    <p className="text-sm text-text-muted">{profile.phone}</p>
+                  )}
+                </div>
+                <p className="mt-2 text-xs text-text-muted">
+                  <Link href="/patient/profile" className="text-primary hover:underline">
+                    Update profile
+                  </Link>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mt-2 text-sm text-text-muted">
+                  Enter your contact details. No account needed.
+                </p>
+                <div className="mt-4 space-y-4">
+                  <div>
+                    <label htmlFor="guest-name" className="block text-sm font-medium text-text">Full name *</label>
+                    <input
+                      id="guest-name"
+                      type="text"
+                      required
+                      value={guestName}
+                      onChange={(e) => setGuestName(e.target.value)}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="guest-email" className="block text-sm font-medium text-text">Email *</label>
+                    <input
+                      id="guest-email"
+                      type="email"
+                      required
+                      value={guestEmail}
+                      onChange={(e) => setGuestEmail(e.target.value)}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="guest-phone" className="block text-sm font-medium text-text">Phone (optional)</label>
+                    <input
+                      id="guest-phone"
+                      type="tel"
+                      value={guestPhone}
+                      onChange={(e) => setGuestPhone(e.target.value)}
+                      className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                      placeholder="(555) 000-0000"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
             <div className="mt-4">
               <label className="block text-sm font-medium text-text">Notes (optional)</label>
               <textarea
@@ -276,11 +331,6 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                 placeholder="Any symptoms or questions for the doctor?"
               />
             </div>
-            <p className="mt-2 text-xs text-text-muted">
-              <Link href="/patient/profile" className="text-primary hover:underline">
-                Update profile
-              </Link>
-            </p>
           </div>
         )}
 
@@ -288,6 +338,12 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
           <div>
             <h2 className="font-semibold text-text">Confirm booking</h2>
             <div className="mt-4 space-y-3 rounded-lg border border-slate-200 p-4">
+              {isGuest && (
+                <p><span className="text-text-muted">Name:</span> {guestName}</p>
+              )}
+              {isGuest && (
+                <p><span className="text-text-muted">Email:</span> {guestEmail}</p>
+              )}
               <p><span className="text-text-muted">Service:</span> {selectedService?.name}</p>
               <p><span className="text-text-muted">Doctor:</span> {selectedDoctor?.full_name} ({selectedDoctor?.specialty})</p>
               <p><span className="text-text-muted">Date:</span> {date && new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</p>

@@ -21,10 +21,10 @@ export default async function AdminQueuePage() {
   const { rows: queueRows } = await sql`
     select q.id, q.queue_number, q.status, q.checked_in_at,
            a.id as appointment_id, a.appointment_date, a.appointment_time,
-           pat.full_name as patient_name, docp.full_name as doctor_name, d.specialty, s.name as service_name
+           coalesce(pat.full_name, a.guest_name) as patient_name, docp.full_name as doctor_name, d.specialty, s.name as service_name
     from queue_entries q
     join appointments a on a.id = q.appointment_id
-    join profiles pat on pat.id = a.patient_id
+    left join profiles pat on pat.id = a.patient_id
     join doctors d on d.id = a.doctor_id
     join profiles docp on docp.id = d.profile_id
     join services s on s.id = a.service_id
@@ -35,9 +35,9 @@ export default async function AdminQueuePage() {
 
   const inQueueIds = new Set(queue.map((q) => q.appointment_id));
   const { rows: todayRows } = await sql`
-    select a.id, a.appointment_time, pat.full_name as patient_name, docp.full_name as doctor_name, d.specialty, s.name as service_name
+    select a.id, a.appointment_time, coalesce(pat.full_name, a.guest_name) as patient_name, docp.full_name as doctor_name, d.specialty, s.name as service_name
     from appointments a
-    join profiles pat on pat.id = a.patient_id
+    left join profiles pat on pat.id = a.patient_id
     join doctors d on d.id = a.doctor_id
     join profiles docp on docp.id = d.profile_id
     join services s on s.id = a.service_id
