@@ -31,7 +31,7 @@ export default async function BookPage() {
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-bold text-text">Book an appointment</h1>
       <p className="mt-2 text-text-muted">
-        Choose your service, doctor, and a convenient time.
+        Choose your service, doctor, and a convenient time. No account needed — enter your details at the end to confirm.
       </p>
       <BookingFlow services={services} doctors={doctors} />
     </div>

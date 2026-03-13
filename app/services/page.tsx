@@ -5,13 +5,18 @@ export const dynamic = "force-dynamic";
 import type { Service } from "@/types/database";
 
 async function getServices(): Promise<Service[]> {
-  const { rows } = await sql`
-    select id, name, description, duration_minutes, price, is_active, created_at
-    from services
-    where is_active = true
-    order by name
-  `;
-  return rows as Service[];
+  try {
+    const { rows } = await sql`
+      select id, name, description, duration_minutes, price, is_active, created_at
+      from services
+      where is_active = true
+      order by name
+    `;
+    return (rows || []) as Service[];
+  } catch (e) {
+    console.error("[ServicesPage] getServices error:", e);
+    return [];
+  }
 }
 
 export default async function ServicesPage() {
@@ -28,8 +33,11 @@ export default async function ServicesPage() {
         <div className="card mt-8 text-center">
           <p className="text-text-muted">No services listed yet.</p>
           <p className="mt-2 text-sm text-text-muted">
-            Check back soon or contact the clinic.
+            Run <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in your database (Neon SQL Editor) to add services, or check back later.
           </p>
+          <Link href="/book" className="mt-4 inline-block btn-secondary">
+            Book an appointment anyway
+          </Link>
         </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
