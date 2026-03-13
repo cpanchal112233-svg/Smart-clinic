@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { sql } from "@/lib/db";
+import { FALLBACK_SERVICES } from "@/lib/fallback-services";
 
 export const dynamic = "force-dynamic";
 import type { Service } from "@/types/database";
@@ -21,6 +22,7 @@ async function getServices(): Promise<Service[]> {
 
 export default async function ServicesPage() {
   const services = await getServices();
+  const displayServices = services.length > 0 ? services : FALLBACK_SERVICES;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -29,19 +31,19 @@ export default async function ServicesPage() {
         Choose a service to see availability and book an appointment.
       </p>
 
-      {services.length === 0 ? (
+      {displayServices.length === 0 ? (
         <div className="card mt-8 text-center">
           <p className="text-text-muted">No services listed yet.</p>
           <p className="mt-2 text-sm text-text-muted">
-            Run <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in your database (Neon SQL Editor) to add services, or check back later.
+            Run <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in your database (Neon SQL Editor) to add services.
           </p>
           <Link href="/book" className="mt-4 inline-block btn-secondary">
-            Book an appointment anyway
+            Book an appointment
           </Link>
         </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
+          {displayServices.map((s) => (
             <div key={s.id} className="card">
               <h2 className="font-semibold text-text">{s.name}</h2>
               {s.description && (
@@ -52,7 +54,7 @@ export default async function ServicesPage() {
                   {s.duration_minutes} min
                   {s.price != null && ` · $${Number(s.price).toFixed(0)}`}
                 </span>
-                <Link href={`/book?service=${s.id}`} className="btn-primary text-sm">
+                <Link href={String(s.id).startsWith("fallback") ? "/book" : `/book?service=${s.id}`} className="btn-primary text-sm">
                   Book
                 </Link>
               </div>
