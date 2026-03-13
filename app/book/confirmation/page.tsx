@@ -14,7 +14,7 @@ export default async function BookingConfirmationPage({
   if (!id) redirect("/book");
 
   const { rows } = await sql`
-    select a.id, a.appointment_date, a.appointment_time, a.status, a.notes,
+    select a.id, a.patient_id, a.appointment_date, a.appointment_time, a.status, a.notes,
            p.full_name as doctor_name, d.specialty,
            s.name as service_name
     from appointments a
@@ -24,7 +24,7 @@ export default async function BookingConfirmationPage({
     where a.id = ${id}::uuid
     limit 1
   `;
-  const appointment = rows[0] as { id: string; appointment_date: string; appointment_time: string; status: string; notes: string | null; doctor_name: string; specialty: string; service_name: string } | undefined;
+  const appointment = rows[0] as { id: string; patient_id: string | null; appointment_date: string; appointment_time: string; status: string; notes: string | null; doctor_name: string; specialty: string; service_name: string } | undefined;
   if (!appointment) redirect("/book");
 
   return (
@@ -56,9 +56,15 @@ export default async function BookingConfirmationPage({
         </div>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link href="/patient/dashboard" className="btn-primary">
-            Go to Dashboard
-          </Link>
+          {appointment.patient_id ? (
+            <Link href="/patient/dashboard" className="btn-primary">
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link href="/" className="btn-primary">
+              Home
+            </Link>
+          )}
           <Link href="/book" className="btn-secondary">
             Book another
           </Link>
