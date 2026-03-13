@@ -131,6 +131,11 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
 
   return (
     <div className="mt-8">
+      {isGuest && (
+        <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 text-center text-sm text-text">
+          <strong>Booking as guest</strong> — No account needed. Choose your service and time; we&apos;ll ask for your name and email before confirming.
+        </div>
+      )}
       <div className="mb-8 flex flex-wrap gap-2">
         {STEPS.map((label, i) => (
           <button
@@ -154,6 +159,11 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
         {step === 0 && (
           <div>
             <h2 className="font-semibold text-text">Select a service</h2>
+            {services.length === 0 ? (
+              <p className="mt-4 text-text-muted">
+                No services in the database yet. Run <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in Neon SQL Editor to add services, or contact the clinic.
+              </p>
+            ) : (
             <div className="mt-4 space-y-2">
               {services.map((s) => (
                 <button
@@ -174,12 +184,18 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                 </button>
               ))}
             </div>
+            )}
           </div>
         )}
 
         {step === 1 && (
           <div>
             <h2 className="font-semibold text-text">Select a doctor</h2>
+            {doctors.length === 0 ? (
+              <p className="mt-4 text-text-muted">
+                No doctors available yet. Add doctors in the database (see deployment guide) to enable booking.
+              </p>
+            ) : (
             <div className="mt-4 space-y-2">
               {doctors.map((d) => (
                 <button
@@ -197,6 +213,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                 </button>
               ))}
             </div>
+            )}
           </div>
         )}
 

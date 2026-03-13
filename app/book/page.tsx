@@ -6,23 +6,31 @@ import type { Service } from "@/types/database";
 import type { Doctor } from "@/types/database";
 
 async function getServices(): Promise<Service[]> {
-  const { rows } = await sql`
-    select id, name, description, duration_minutes, price, is_active, created_at
-    from services where is_active = true order by name
-  `;
-  return rows as Service[];
+  try {
+    const { rows } = await sql`
+      select id, name, description, duration_minutes, price, is_active, created_at
+      from services where is_active = true order by name
+    `;
+    return (rows || []) as Service[];
+  } catch {
+    return [];
+  }
 }
 
 async function getDoctors(): Promise<(Doctor & { full_name: string })[]> {
-  const { rows } = await sql`
-    select d.id, d.profile_id, d.specialty, d.bio, d.is_available, d.created_at,
-           p.full_name
-    from doctors d
-    join profiles p on p.id = d.profile_id
-    where d.is_available = true
-    order by d.specialty
-  `;
-  return rows as (Doctor & { full_name: string })[];
+  try {
+    const { rows } = await sql`
+      select d.id, d.profile_id, d.specialty, d.bio, d.is_available, d.created_at,
+             p.full_name
+      from doctors d
+      join profiles p on p.id = d.profile_id
+      where d.is_available = true
+      order by d.specialty
+    `;
+    return (rows || []) as (Doctor & { full_name: string })[];
+  } catch {
+    return [];
+  }
 }
 
 export default async function BookPage() {

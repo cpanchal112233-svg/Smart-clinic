@@ -1,13 +1,8 @@
 import Link from "next/link";
 import { sql } from "@/lib/db";
+import { FALLBACK_SERVICES } from "@/lib/fallback-services";
 
 export const dynamic = "force-dynamic";
-
-const FALLBACK_SERVICES = [
-  { id: "fallback-1", name: "General Checkup", description: "Routine health assessment and preventive care.", duration_minutes: 30, price: 50 },
-  { id: "fallback-2", name: "Consultation", description: "One-on-one time with your doctor to discuss concerns.", duration_minutes: 20, price: 75 },
-  { id: "fallback-3", name: "Follow-up", description: "Track progress and adjust treatment as needed.", duration_minutes: 15, price: 40 },
-];
 
 async function getServices() {
   try {
