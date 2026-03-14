@@ -52,40 +52,40 @@ export default async function PatientDashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-text">
+      <h1 className="text-3xl font-bold text-white">
         Welcome back, {profile.full_name?.split(" ")[0] ?? "there"}
       </h1>
-      <p className="mt-1 text-text-muted">Here’s your appointment overview.</p>
+      <p className="mt-1 text-white-muted">Here’s your appointment overview.</p>
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <Link href="/book" className="card group block border border-slate-200 transition hover:border-primary/30">
+        <Link href="/book" className="card group block border border-white/20 transition hover:border-primary/30">
           <span className="text-2xl">📅</span>
-          <h2 className="mt-2 font-semibold text-text group-hover:text-primary">Book new appointment</h2>
-          <p className="mt-1 text-sm text-text-muted">Schedule a visit with a doctor.</p>
+          <h2 className="mt-2 font-semibold text-white group-hover:text-primary">Book new appointment</h2>
+          <p className="mt-1 text-sm text-white-muted">Schedule a visit with a doctor.</p>
         </Link>
-        <Link href="/patient/appointments" className="card group block border border-slate-200 transition hover:border-primary/30">
+        <Link href="/patient/appointments" className="card group block border border-white/20 transition hover:border-primary/30">
           <span className="text-2xl">📋</span>
-          <h2 className="mt-2 font-semibold text-text group-hover:text-primary">Appointment history</h2>
-          <p className="mt-1 text-sm text-text-muted">View and manage past visits.</p>
+          <h2 className="mt-2 font-semibold text-white group-hover:text-primary">Appointment history</h2>
+          <p className="mt-1 text-sm text-white-muted">View and manage past visits.</p>
         </Link>
-        <Link href="/patient/profile" className="card group block border border-slate-200 transition hover:border-primary/30">
+        <Link href="/patient/profile" className="card group block border border-white/20 transition hover:border-primary/30">
           <span className="text-2xl">👤</span>
-          <h2 className="mt-2 font-semibold text-text group-hover:text-primary">Profile & settings</h2>
-          <p className="mt-1 text-sm text-text-muted">Update your details.</p>
+          <h2 className="mt-2 font-semibold text-white group-hover:text-primary">Profile & settings</h2>
+          <p className="mt-1 text-sm text-white-muted">Update your details.</p>
         </Link>
       </div>
 
       {nextAppointment && (
         <section className="mt-10">
-          <h2 className="text-xl font-semibold text-text">Next appointment</h2>
+          <h2 className="text-xl font-semibold text-white">Next appointment</h2>
           <div className="card mt-4 border border-primary/20 bg-primary/5">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="font-medium text-text">{nextAppointment.service_name}</p>
-                <p className="text-sm text-text-muted">
+                <p className="font-medium text-white">{nextAppointment.service_name}</p>
+                <p className="text-sm text-white-muted">
                   {nextAppointment.doctor_name} · {nextAppointment.specialty}
                 </p>
-                <p className="mt-2 text-text">
+                <p className="mt-2 text-white">
                   {formatDate(nextAppointment.appointment_date)} at {formatTime(nextAppointment.appointment_time)}
                 </p>
                 <span className="mt-2 inline-block rounded-full bg-primary/20 px-2 py-0.5 text-xs font-medium text-primary capitalize">
@@ -107,8 +107,8 @@ export default async function PatientDashboardPage() {
 
       {!nextAppointment && (
         <section className="mt-10">
-          <h2 className="text-xl font-semibold text-text">Upcoming appointments</h2>
-          <div className="card mt-4 text-center text-text-muted">
+          <h2 className="text-xl font-semibold text-white">Upcoming appointments</h2>
+          <div className="card mt-4 text-center text-white-muted">
             <p>No upcoming appointments.</p>
             <Link href="/book" className="mt-2 inline-block text-primary hover:underline">
               Book one now
@@ -118,9 +118,9 @@ export default async function PatientDashboardPage() {
       )}
 
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-text">Recent activity</h2>
+        <h2 className="text-xl font-semibold text-white">Recent activity</h2>
         {recent.length === 0 ? (
-          <div className="card mt-4 text-center text-text-muted">
+          <div className="card mt-4 text-center text-white-muted">
             No appointments yet.
           </div>
         ) : (
@@ -129,11 +129,11 @@ export default async function PatientDashboardPage() {
               <li key={a.id} className="card flex items-center justify-between">
                 <div>
                   <span className="font-medium">{a.service_name}</span>
-                  <span className="ml-2 text-sm text-text-muted">
+                  <span className="ml-2 text-sm text-white-muted">
                     {formatDate(a.appointment_date)} · {formatTime(a.appointment_time)}
                   </span>
                 </div>
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs capitalize text-text-muted">
+                <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs capitalize text-slate-300">
                   {a.status}
                 </span>
               </li>
@@ -144,13 +144,13 @@ export default async function PatientDashboardPage() {
 
       {notifications.length > 0 && (
         <section className="mt-10">
-          <h2 className="text-xl font-semibold text-text">Notifications</h2>
+          <h2 className="text-xl font-semibold text-white">Notifications</h2>
           <ul className="mt-4 space-y-2">
             {notifications.map((n) => (
               <li key={n.id} className={`card ${!n.is_read ? "border-l-4 border-l-primary" : ""}`}>
-                <p className="font-medium text-text">{n.title}</p>
-                <p className="text-sm text-text-muted">{n.message}</p>
-                <p className="mt-1 text-xs text-text-muted">
+                <p className="font-medium text-white">{n.title}</p>
+                <p className="text-sm text-white-muted">{n.message}</p>
+                <p className="mt-1 text-xs text-white-muted">
                   {new Date(n.created_at).toLocaleString()}
                 </p>
               </li>

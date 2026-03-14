@@ -38,33 +38,33 @@ export function ProfileForm({ fullName, email, phone }: ProfileFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {message && (
-        <div className={`rounded-lg p-3 text-sm ${message.type === "ok" ? "bg-green-50 text-green-800" : "bg-red-50 text-red-700"}`}>
+        <div className={`rounded-lg p-3 text-sm ${message.type === "ok" ? "bg-green-500/20 text-green-200 border border-green-400/30" : "bg-red-500/20 text-red-200 border border-red-400/30"}`}>
           {message.text}
         </div>
       )}
       <div>
-        <label htmlFor="full_name" className="block text-sm font-medium text-text">Full name</label>
+        <label htmlFor="full_name" className="block text-sm font-medium text-slate-200">Full name</label>
         <input
           id="full_name"
           type="text"
           value={full_name}
           onChange={(e) => setFullName(e.target.value)}
-          className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-text"
+          className="input-glass mt-1"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-text">Email</label>
-        <p className="mt-1 text-text-muted">{email}</p>
-        <p className="text-xs text-text-muted">Email cannot be changed here.</p>
+        <label className="block text-sm font-medium text-slate-200">Email</label>
+        <p className="mt-1 text-slate-300">{email}</p>
+        <p className="text-xs text-slate-400">Email cannot be changed here.</p>
       </div>
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-text">Phone</label>
+        <label htmlFor="phone" className="block text-sm font-medium text-slate-200">Phone</label>
         <input
           id="phone"
           type="tel"
           value={phone_val}
           onChange={(e) => setPhone(e.target.value)}
-          className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-text"
+          className="input-glass mt-1"
         />
       </div>
       <button type="submit" className="btn-primary w-full" disabled={saving}>

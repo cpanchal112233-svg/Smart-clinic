@@ -88,7 +88,7 @@ export default async function HomePage() {
                 <h3 className="font-semibold text-white">{s.name}</h3>
                 <p className="mt-2 text-sm text-slate-300 line-clamp-2">{s.description ?? ""}</p>
                 <div className="mt-2 text-xs text-slate-400">
-                  {s.duration_minutes} min{s.price != null && ` · $${Number(s.price).toFixed(0)}`}
+                  {s.duration_minutes} min
                 </div>
                 <Link
                   href={s.id.startsWith("fallback") ? "/services" : `/book?service=${s.id}`}
