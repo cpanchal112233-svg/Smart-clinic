@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import AuthPageBackground from "@/components/auth/AuthPageBackground";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -34,21 +33,20 @@ export default function SignupPage() {
 
   return (
     <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
-      <AuthPageBackground />
       <div className="relative z-10 mx-auto max-w-md px-4 py-16 sm:px-6">
         <div className="card">
-        <h1 className="text-2xl font-bold text-text">Create account</h1>
-        <p className="mt-1 text-sm text-text-muted">
+        <h1 className="text-2xl font-bold text-white">Create account</h1>
+        <p className="mt-1 text-sm text-slate-300">
           Sign up to book and manage your appointments.
         </p>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           {error && (
-            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+            <div className="rounded-lg bg-red-500/20 border border-red-400/30 p-3 text-sm text-red-200">
               {error}
             </div>
           )}
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-text">
+            <label htmlFor="fullName" className="block text-sm font-medium text-slate-200">
               Full name
             </label>
             <input
@@ -58,11 +56,11 @@ export default function SignupPage() {
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="input-glass mt-1"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-text">
+            <label htmlFor="email" className="block text-sm font-medium text-slate-200">
               Email
             </label>
             <input
@@ -72,11 +70,11 @@ export default function SignupPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="input-glass mt-1"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-text">
+            <label htmlFor="password" className="block text-sm font-medium text-slate-200">
               Password
             </label>
             <input
@@ -87,15 +85,15 @@ export default function SignupPage() {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="input-glass mt-1"
             />
-            <p className="mt-1 text-xs text-text-muted">At least 6 characters</p>
+            <p className="mt-1 text-xs text-slate-400">At least 6 characters</p>
           </div>
           <button type="submit" className="btn-primary w-full" disabled={loading}>
             {loading ? "Creating account…" : "Sign up"}
           </button>
         </form>
-        <p className="mt-6 text-center text-sm text-text-muted">
+        <p className="mt-6 text-center text-sm text-slate-400">
           Already have an account?{" "}
           <Link href="/login" className="font-medium text-primary hover:underline">
             Sign in

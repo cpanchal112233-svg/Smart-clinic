@@ -12,19 +12,26 @@
   --text-muted: #64748B;
 }
 
+/* App uses 3D background globally: light text + glass panels for readability and smooth animation */
 body {
-  @apply bg-background text-text antialiased;
+  @apply bg-transparent text-slate-100 antialiased;
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-slate-900/50;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-primary bg-transparent px-5 py-2.5 text-sm font-medium text-primary transition hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-lg border border-white/40 bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-slate-900/50;
   }
   .card {
-    @apply rounded-2xl bg-surface p-6 shadow-sm;
+    @apply rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-md;
+  }
+  .input-glass {
+    @apply w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+  }
+  textarea.input-glass {
+    @apply min-h-[80px] resize-y;
   }
 }
 

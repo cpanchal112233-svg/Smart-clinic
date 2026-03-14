@@ -21,7 +21,7 @@ export function Header() {
   const isAdmin = role === "admin" || role === "doctor";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-900/40 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center" aria-label="SmartClinic – Home">
           <Image src="/logo.png" alt="SmartClinic" width={44} height={44} className="block" priority />
@@ -32,7 +32,7 @@ export function Header() {
               key={href}
               href={href}
               className={`text-sm font-medium transition ${
-                pathname === href ? "text-primary" : "text-text-muted hover:text-text"
+                pathname === href ? "text-primary" : "text-slate-300 hover:text-white"
               }`}
             >
               {label}
@@ -41,13 +41,13 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-3">
           {status === "loading" ? (
-            <span className="text-sm text-text-muted">…</span>
+            <span className="text-sm text-slate-400">…</span>
           ) : user ? (
             <>
               {isPatient && (
                 <Link
                   href="/patient/dashboard"
-                  className="text-sm font-medium text-text-muted hover:text-text"
+                  className="text-sm font-medium text-slate-300 hover:text-white"
                 >
                   Dashboard
                 </Link>
@@ -55,12 +55,12 @@ export function Header() {
               {isAdmin && (
                 <Link
                   href="/admin/dashboard"
-                  className="text-sm font-medium text-text-muted hover:text-text"
+                  className="text-sm font-medium text-slate-300 hover:text-white"
                 >
                   Admin
                 </Link>
               )}
-              <Link href="/patient/profile" className="text-sm font-medium text-text-muted hover:text-text">
+              <Link href="/patient/profile" className="text-sm font-medium text-slate-300 hover:text-white">
                 Profile
               </Link>
               <button type="button" onClick={() => signOut({ callbackUrl: "/" })} className="btn-secondary text-sm">
@@ -69,7 +69,7 @@ export function Header() {
             </>
           ) : (
             <>
-              <Link href="/login" className="text-sm font-medium text-text-muted hover:text-text">
+              <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white">
                 Login
               </Link>
               <Link href="/signup" className="btn-primary">

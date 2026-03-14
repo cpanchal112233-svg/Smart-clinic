@@ -24,15 +24,15 @@ export default async function DoctorsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-text">Our Doctors</h1>
-      <p className="mt-2 text-text-muted">
+      <h1 className="text-3xl font-bold text-white">Our Doctors</h1>
+      <p className="mt-2 text-slate-300">
         Experienced professionals. Choose a doctor to book an appointment.
       </p>
 
       {doctors.length === 0 ? (
         <div className="card mt-8 text-center">
-          <p className="text-text-muted">No doctors listed yet.</p>
-          <p className="mt-2 text-sm text-text-muted">
+          <p className="text-slate-300">No doctors listed yet.</p>
+          <p className="mt-2 text-sm text-slate-400">
             Check back soon or contact the clinic.
           </p>
         </div>
@@ -41,7 +41,7 @@ export default async function DoctorsPage() {
           {doctors.map((d) => (
             <div key={d.id} className="card flex flex-col">
               <div className="flex items-start gap-4">
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-slate-200">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-white/10 border border-white/10">
                   {d.avatar_url ? (
                     <Image
                       src={d.avatar_url}
@@ -56,10 +56,10 @@ export default async function DoctorsPage() {
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="font-semibold text-text">{d.full_name ?? "Doctor"}</h2>
+                  <h2 className="font-semibold text-white">{d.full_name ?? "Doctor"}</h2>
                   <p className="text-sm text-primary">{d.specialty}</p>
                   {d.bio && (
-                    <p className="mt-2 line-clamp-3 text-sm text-text-muted">
+                    <p className="mt-2 line-clamp-3 text-sm text-slate-300">
                       {d.bio}
                     </p>
                   )}

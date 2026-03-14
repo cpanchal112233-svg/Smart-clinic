@@ -11,9 +11,9 @@ export function GlobalSceneBackground() {
   return (
     <>
       <Scene3D />
-      {/* Overlay so white/light content remains readable over the 3D scene */}
+      {/* Light overlay so 3D stays visible and text remains readable */}
       <div
-        className="fixed inset-0 -z-10 bg-slate-900/35 pointer-events-none"
+        className="fixed inset-0 -z-10 bg-slate-900/25 pointer-events-none"
         aria-hidden
       />
     </>
