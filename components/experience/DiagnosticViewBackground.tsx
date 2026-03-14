@@ -206,66 +206,10 @@ export default function DiagnosticViewBackground() {
   }, []);
 
   return (
-    <>
-      <div
-        ref={containerRef}
-        className="fixed inset-0 -z-20 bg-[#020617]"
-        aria-hidden
-      />
-      {/* UI Overlay from the original design */}
-      <div className="fixed inset-0 pointer-events-none z-0 flex flex-col justify-between p-6 sm:p-10">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center gap-3 bg-slate-900/50 backdrop-blur-md p-3 rounded-xl border border-white/10">
-            <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-emerald-500 tracking-widest uppercase font-bold">
-                Live Diagnostic View
-              </span>
-              <span className="text-[9px] text-slate-400 font-mono">
-                SYSTEM_ID: SC-992-ALPHA
-              </span>
-            </div>
-          </div>
-          <div className="text-right font-mono text-[10px] text-cyan-400/60 leading-tight hidden sm:block">
-            FRAME_RATE: 60FPS
-            <br />
-            LATENCY: 12MS
-            <br />
-            ENCRYPTION: AES-256
-          </div>
-        </div>
-
-        <div className="max-w-xl">
-          <h1 className="text-4xl sm:text-6xl font-black text-white leading-none tracking-tighter">
-            Precision <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-              Diagnostics.
-            </span>
-          </h1>
-          <p className="text-slate-400 mt-4 text-sm sm:text-base max-w-sm">
-            Real-time 3D patient visualization and medical analysis. Scroll to
-            explore the future of healthcare.
-          </p>
-        </div>
-
-        <div className="flex justify-between items-end">
-          <div className="bg-white/5 backdrop-blur-sm p-4 rounded-2xl border border-white/10 text-white text-xs max-w-[200px]">
-            <p className="opacity-60 mb-2 uppercase tracking-tighter font-bold">
-              AI Summary
-            </p>
-            <p>
-              Patient vitals are stable. Scan is 84% complete. No anomalies
-              detected in current skeletal alignment.
-            </p>
-          </div>
-          <div className="w-16 h-16 border-2 border-cyan-500/20 rounded-full flex items-center justify-center relative">
-            <div className="absolute inset-0 border-t-2 border-cyan-400 rounded-full animate-spin" />
-            <span className="text-[8px] text-cyan-400 font-bold uppercase">
-              Scanning
-            </span>
-          </div>
-        </div>
-      </div>
-    </>
+    <div
+      ref={containerRef}
+      className="fixed inset-0 -z-20 bg-[#020617]"
+      aria-hidden
+    />
   );
 }
