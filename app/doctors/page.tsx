@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { sql } from "@/lib/db";
+import { FindDoctorsNearby } from "./FindDoctorsNearby";
 
 export const dynamic = "force-dynamic";
 import type { Doctor } from "@/types/database";
@@ -9,7 +10,7 @@ type DoctorRow = Doctor & { full_name: string; avatar_url: string | null };
 
 async function getDoctors(): Promise<DoctorRow[]> {
   const { rows } = await sql`
-    select d.id, d.profile_id, d.specialty, d.bio, d.is_available, d.created_at,
+    select d.id, d.profile_id, d.specialty, d.bio, d.is_available, d.latitude, d.longitude, d.created_at,
            p.full_name, p.avatar_url
     from doctors d
     join profiles p on p.id = d.profile_id
@@ -26,8 +27,10 @@ export default async function DoctorsPage() {
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-bold text-white">Our Doctors</h1>
       <p className="mt-2 text-slate-300">
-        Experienced professionals. Choose a doctor to book an appointment.
+        Experienced professionals. Choose a doctor to book an appointment. Use your location to find doctors nearby for instant treatment.
       </p>
+
+      <FindDoctorsNearby className="mt-6" />
 
       {doctors.length === 0 ? (
         <div className="card mt-8 text-center">

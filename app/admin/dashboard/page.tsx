@@ -5,6 +5,7 @@ import { getServerSession } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 import { sql } from "@/lib/db";
 import { formatTime } from "@/lib/utils";
+import { DoctorLocationSetting } from "./DoctorLocationSetting";
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -63,11 +64,16 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="mt-10 flex gap-4">
+      <div className="mt-10 flex flex-wrap gap-4">
         <Link href="/admin/appointments" className="btn-primary">Appointments</Link>
         <Link href="/admin/queue" className="btn-secondary">Queue</Link>
         <Link href="/admin/doctors" className="btn-secondary">Doctors schedule</Link>
+        {role === "admin" && (
+          <Link href="/admin/doctor-applications" className="btn-secondary">Doctor applications</Link>
+        )}
       </div>
+
+      {role === "doctor" && <DoctorLocationSetting />}
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-text">Today&apos;s appointments</h2>
