@@ -1,13 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 
 const Scene3D = dynamic(() => import("@/components/experience/Scene3D"), {
   ssr: false,
 });
 
-/** Fixed 3D background + overlay so page content stays readable. Rendered on every page via root layout. */
+/** Fixed 3D background + overlay so page content stays readable. Hidden on /diagnostics (uses its own scene). */
 export function GlobalSceneBackground() {
+  const pathname = usePathname();
+  if (pathname === "/diagnostics") return null;
+
   return (
     <>
       <Scene3D />
