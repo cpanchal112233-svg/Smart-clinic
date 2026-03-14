@@ -18,8 +18,8 @@ export default async function PatientProfilePage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-text">Profile & settings</h1>
-      <p className="mt-2 text-text-muted">Update your contact details.</p>
+      <h1 className="text-3xl font-bold text-white">Profile & settings</h1>
+      <p className="mt-2 text-slate-300">Update your contact details.</p>
 
       <div className="mt-8 card">
         <ProfileForm
@@ -29,7 +29,7 @@ export default async function PatientProfilePage() {
         />
       </div>
 
-      <p className="mt-6 text-center text-sm text-text-muted">
+      <p className="mt-6 text-center text-sm text-slate-400">
         <Link href="/patient/dashboard" className="text-primary hover:underline">
           ← Back to dashboard
         </Link>

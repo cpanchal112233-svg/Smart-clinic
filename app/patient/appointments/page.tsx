@@ -34,8 +34,8 @@ export default async function PatientAppointmentsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-text">Appointments</h1>
-      <p className="mt-2 text-text-muted">View and manage your appointments.</p>
+      <h1 className="text-3xl font-bold text-white">Appointments</h1>
+      <p className="mt-2 text-slate-300">View and manage your appointments.</p>
 
       <div className="mt-6 flex gap-4">
         <Link href="/book" className="btn-primary">
@@ -47,9 +47,9 @@ export default async function PatientAppointmentsPage() {
       </div>
 
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-text">Upcoming</h2>
+        <h2 className="text-xl font-semibold text-white">Upcoming</h2>
         {upcoming.length === 0 ? (
-          <div className="card mt-4 text-center text-text-muted">
+          <div className="card mt-4 text-center text-slate-300">
             No upcoming appointments. <Link href="/book" className="text-primary hover:underline">Book one</Link>.
           </div>
         ) : (
@@ -57,16 +57,16 @@ export default async function PatientAppointmentsPage() {
             {upcoming.map((a) => (
               <li key={a.id} className="card flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <p className="font-medium text-text">{a.service_name}</p>
-                  <p className="text-sm text-text-muted">
+                  <p className="font-medium text-white">{a.service_name}</p>
+                  <p className="text-sm text-slate-300">
                     {a.doctor_name} · {a.specialty}
                   </p>
-                  <p className="text-text">
+                  <p className="text-white">
                     {formatDate(a.appointment_date)} at {formatTime(a.appointment_time)}
                   </p>
                   <span className={`mt-2 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                    a.status === "cancelled" ? "bg-red-100 text-red-700" :
-                    a.status === "completed" ? "bg-green-100 text-green-700" :
+                    a.status === "cancelled" ? "bg-red-500/20 text-red-200" :
+                    a.status === "completed" ? "bg-green-500/20 text-green-200" :
                     "bg-primary/20 text-primary"
                   }`}>
                     {a.status.replace("_", " ")}
@@ -87,20 +87,20 @@ export default async function PatientAppointmentsPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-text">History</h2>
+        <h2 className="text-xl font-semibold text-white">History</h2>
         {past.length === 0 ? (
-          <div className="card mt-4 text-center text-text-muted">No past appointments.</div>
+          <div className="card mt-4 text-center text-slate-400">No past appointments.</div>
         ) : (
           <ul className="mt-4 space-y-2">
             {past.map((a) => (
               <li key={a.id} className="card flex items-center justify-between">
                 <div>
-                  <span className="font-medium">{a.service_name}</span>
-                  <span className="ml-2 text-sm text-text-muted">
+                  <span className="font-medium text-white">{a.service_name}</span>
+                  <span className="ml-2 text-sm text-slate-400">
                     {formatDate(a.appointment_date)} · {formatTime(a.appointment_time)}
                   </span>
                 </div>
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs capitalize text-text-muted">
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs capitalize text-slate-400">
                   {a.status}
                 </span>
               </li>

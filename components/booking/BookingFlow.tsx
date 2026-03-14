@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import type { Service } from "@/types/database";
 import type { Doctor } from "@/types/database";
+import { groupServicesByCategory, type ServiceCategory } from "@/lib/service-categories";
 
 type DoctorWithName = Doctor & { full_name: string };
 
@@ -27,6 +28,8 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
+  const servicesByCategory = useMemo(() => groupServicesByCategory(services), [services]);
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null);
   const [step, setStep] = useState(0);
   const [serviceId, setServiceId] = useState<string | null>(
     () => searchParams.get("service") || null
@@ -163,27 +166,50 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
               <p className="mt-4 text-slate-300">
                 No services in the database yet. Run <code className="rounded bg-white/10 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in Neon SQL Editor to add services, or contact the clinic.
               </p>
+            ) : selectedCategory === null ? (
+              <div className="mt-4">
+                <p className="text-sm text-slate-300 mb-3">Choose a category, then pick a service.</p>
+                <div className="space-y-2">
+                  {Array.from(servicesByCategory.keys()).map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat)}
+                      className="block w-full rounded-lg border border-white/20 bg-white/5 p-4 text-left transition hover:border-primary/40 hover:bg-white/10"
+                    >
+                      <span className="font-medium text-white">{cat}</span>
+                      <span className="ml-2 text-sm text-slate-400">
+                        {servicesByCategory.get(cat)?.length ?? 0} service(s)
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             ) : (
-            <div className="mt-4 space-y-2">
-              {services.map((s) => (
+              <div className="mt-4 space-y-2">
                 <button
-                  key={s.id}
                   type="button"
-                  onClick={() => setServiceId(s.id)}
-                  className={`block w-full rounded-lg border p-4 text-left transition ${
-                    serviceId === s.id
-                      ? "border-primary bg-primary/5"
-                      : "border-white/20 hover:border-white/30"
-                  }`}
+                  onClick={() => setSelectedCategory(null)}
+                  className="text-sm text-slate-400 hover:text-primary mb-2"
                 >
-                  <span className="font-medium">{s.name}</span>
-                  <span className="ml-2 text-sm text-slate-300">
-                    {s.duration_minutes} min
-                    {s.price != null && ` · $${Number(s.price).toFixed(0)}`}
-                  </span>
+                  ← Change category
                 </button>
-              ))}
-            </div>
+                {(servicesByCategory.get(selectedCategory) ?? []).map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setServiceId(s.id)}
+                    className={`block w-full rounded-lg border p-4 text-left transition ${
+                      serviceId === s.id
+                        ? "border-primary bg-primary/5"
+                        : "border-white/20 hover:border-white/30"
+                    }`}
+                  >
+                    <span className="font-medium text-white">{s.name}</span>
+                    <span className="ml-2 text-sm text-slate-300">{s.duration_minutes} min</span>
+                  </button>
+                ))}
+              </div>
             )}
           </div>
         )}

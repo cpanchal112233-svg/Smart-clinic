@@ -28,11 +28,10 @@ function ServiceCard({ s }: { s: Service }) {
       {s.description && (
         <p className="mt-1 text-sm text-slate-300 line-clamp-2">{s.description}</p>
       )}
-      <div className="mt-3 flex items-center justify-between gap-2">
-        <span className="text-xs text-slate-400">
-          {s.duration_minutes} min
-          {s.price != null && ` · $${Number(s.price).toFixed(0)}`}
-        </span>
+<div className="mt-3 flex items-center justify-between gap-2">
+                <span className="text-xs text-slate-400">
+                  {s.duration_minutes} min
+                </span>
         <Link
           href={String(s.id).startsWith("fallback") ? "/book" : `/book?service=${s.id}`}
           className="btn-primary text-sm py-1.5 px-3"
