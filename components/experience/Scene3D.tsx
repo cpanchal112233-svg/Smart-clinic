@@ -64,7 +64,7 @@ function PatientModel() {
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".scroll-container",
+        trigger: document.body,
         start: "top top",
         end: "bottom bottom",
         scrub: 1,
@@ -111,15 +111,15 @@ function SceneContent() {
 
 export default function Scene3D() {
   return (
-    <div className="fixed inset-0 -z-10 bg-[#020617]">
-      <div className="absolute inset-0 pointer-events-none z-10 border-[20px] border-cyan-500/5">
-        <div className="absolute top-10 left-10 text-cyan-400 font-mono text-xs space-y-1">
+    <div className="fixed inset-0 -z-20 bg-[#020617]" aria-hidden>
+      <div className="absolute inset-0 pointer-events-none z-0 border-[16px] border-cyan-500/[0.06]">
+        <div className="absolute top-8 left-8 text-cyan-400/70 font-mono text-[10px] space-y-0.5">
           <p className="animate-pulse">● SYSTEM_SCAN_ACTIVE</p>
           <p>PATIENT_ID: 882-X</p>
           <p>BIO_METRICS: STABLE</p>
         </div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 border border-cyan-500/20 rounded-full flex items-center justify-center">
-          <div className="w-24 h-24 border-t-2 border-cyan-400 rounded-full animate-spin" />
+        <div className="absolute bottom-8 right-8 w-24 h-24 border border-cyan-500/10 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 border-t border-cyan-400/40 rounded-full animate-spin" />
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export default function Scene3D() {
       </Canvas>
 
       <div
-        className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.8)_100%)]"
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.85)_100%)]"
         aria-hidden
       />
     </div>
