@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import AuthPageBackground from "@/components/auth/AuthPageBackground";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -32,8 +33,10 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-16 sm:px-6">
-      <div className="card">
+    <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
+      <AuthPageBackground />
+      <div className="relative z-10 mx-auto max-w-md px-4 py-16 sm:px-6">
+        <div className="card">
         <h1 className="text-2xl font-bold text-text">Create account</h1>
         <p className="mt-1 text-sm text-text-muted">
           Sign up to book and manage your appointments.
@@ -99,6 +102,7 @@ export default function SignupPage() {
           </Link>
         </p>
       </div>
-    </div>
+      </div>
+    </section>
   );
 }

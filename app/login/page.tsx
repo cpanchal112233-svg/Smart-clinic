@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import AuthPageBackground from "@/components/auth/AuthPageBackground";
 
 function LoginForm() {
   const router = useRouter();
@@ -41,7 +42,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-16 sm:px-6">
+    <div className="relative z-10 mx-auto max-w-md px-4 py-16 sm:px-6">
       <div className="card">
         <h1 className="text-2xl font-bold text-text">Sign in</h1>
         <p className="mt-1 text-sm text-text-muted">
@@ -98,8 +99,11 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-md px-4 py-16 text-center text-text-muted">Loading…</div>}>
-      <LoginForm />
-    </Suspense>
+    <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
+      <AuthPageBackground />
+      <Suspense fallback={<div className="relative z-10 mx-auto max-w-md px-4 py-16 text-center text-text-muted">Loading…</div>}>
+        <LoginForm />
+      </Suspense>
+    </section>
   );
 }
