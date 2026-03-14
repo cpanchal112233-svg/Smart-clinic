@@ -37,8 +37,8 @@ export default async function BookPage() {
   const [services, doctors] = await Promise.all([getServices(), getDoctors()]);
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-text">Book an appointment</h1>
-      <p className="mt-2 text-text-muted">
+      <h1 className="text-3xl font-bold text-white">Book an appointment</h1>
+      <p className="mt-2 text-slate-300">
         Choose your service, doctor, and a convenient time. No account needed — enter your details at the end to confirm.
       </p>
       <BookingFlow services={services} doctors={doctors} />

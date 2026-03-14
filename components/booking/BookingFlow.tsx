@@ -132,7 +132,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
   return (
     <div className="mt-8">
       {isGuest && (
-        <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 text-center text-sm text-text">
+        <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 text-center text-sm text-white">
           <strong>Booking as guest</strong> — No account needed. Choose your service and time; we&apos;ll ask for your name and email before confirming.
         </div>
       )}
@@ -147,7 +147,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                 ? "bg-primary text-white"
                 : i < step
                   ? "bg-primary/20 text-primary"
-                  : "bg-slate-100 text-text-muted"
+                  : "bg-white/10 text-slate-300"
             }`}
           >
             {i + 1}. {label}
@@ -158,10 +158,10 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
       <div className="card">
         {step === 0 && (
           <div>
-            <h2 className="font-semibold text-text">Select a service</h2>
+            <h2 className="font-semibold text-white">Select a service</h2>
             {services.length === 0 ? (
-              <p className="mt-4 text-text-muted">
-                No services in the database yet. Run <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in Neon SQL Editor to add services, or contact the clinic.
+              <p className="mt-4 text-slate-300">
+                No services in the database yet. Run <code className="rounded bg-white/10 px-1 py-0.5 text-xs">lib/seed-services.sql</code> in Neon SQL Editor to add services, or contact the clinic.
               </p>
             ) : (
             <div className="mt-4 space-y-2">
@@ -173,11 +173,11 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                   className={`block w-full rounded-lg border p-4 text-left transition ${
                     serviceId === s.id
                       ? "border-primary bg-primary/5"
-                      : "border-slate-200 hover:border-slate-300"
+                      : "border-white/20 hover:border-white/30"
                   }`}
                 >
                   <span className="font-medium">{s.name}</span>
-                  <span className="ml-2 text-sm text-text-muted">
+                  <span className="ml-2 text-sm text-slate-300">
                     {s.duration_minutes} min
                     {s.price != null && ` · $${Number(s.price).toFixed(0)}`}
                   </span>
@@ -190,9 +190,9 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
 
         {step === 1 && (
           <div>
-            <h2 className="font-semibold text-text">Select a doctor</h2>
+            <h2 className="font-semibold text-white">Select a doctor</h2>
             {doctors.length === 0 ? (
-              <p className="mt-4 text-text-muted">
+              <p className="mt-4 text-slate-300">
                 No doctors available yet. Add doctors in the database (see deployment guide) to enable booking.
               </p>
             ) : (
@@ -205,7 +205,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                   className={`block w-full rounded-lg border p-4 text-left transition ${
                     doctorId === d.id
                       ? "border-primary bg-primary/5"
-                      : "border-slate-200 hover:border-slate-300"
+                      : "border-white/20 hover:border-white/30"
                   }`}
                 >
                   <span className="font-medium">{d.full_name ?? "Doctor"}</span>
@@ -219,7 +219,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
 
         {step === 2 && (
           <div>
-            <h2 className="font-semibold text-text">Select date</h2>
+            <h2 className="font-semibold text-white">Select date</h2>
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {dates.map((d) => (
                 <button
@@ -227,7 +227,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                   type="button"
                   onClick={() => setDate(d)}
                   className={`rounded-lg border py-2 text-sm ${
-                    date === d ? "border-primary bg-primary/5" : "border-slate-200"
+                    date === d ? "border-primary bg-primary/5" : "border-white/20"
                   }`}
                 >
                   {new Date(d + "T00:00:00").toLocaleDateString("en-US", {
@@ -243,11 +243,11 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
 
         {step === 3 && (
           <div>
-            <h2 className="font-semibold text-text">Select time</h2>
+            <h2 className="font-semibold text-white">Select time</h2>
             {loadingSlots ? (
-              <p className="mt-4 text-text-muted">Loading slots…</p>
+              <p className="mt-4 text-slate-300">Loading slots…</p>
             ) : slots.length === 0 ? (
-              <p className="mt-4 text-text-muted">
+              <p className="mt-4 text-slate-300">
                 {date ? "No available slots for this date." : "Select a date first."}
               </p>
             ) : (
@@ -258,7 +258,7 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
                     type="button"
                     onClick={() => setTime(t)}
                     className={`rounded-lg border py-2 text-sm ${
-                      time === t ? "border-primary bg-primary/5" : "border-slate-200"
+                      time === t ? "border-primary bg-primary/5" : "border-white/20"
                     }`}
                   >
                     {t.slice(0, 5)}
@@ -271,20 +271,20 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
 
         {step === 4 && (
           <div>
-            <h2 className="font-semibold text-text">Your details</h2>
+            <h2 className="font-semibold text-white">Your details</h2>
             {user ? (
               <>
-                <p className="mt-2 text-sm text-text-muted">
+                <p className="mt-2 text-sm text-slate-300">
                   We&apos;ll use your profile. Add any notes for the doctor below.
                 </p>
                 <div className="mt-4 rounded-lg bg-slate-50 p-4">
                   <p className="font-medium">{profile?.full_name ?? user?.name}</p>
-                  <p className="text-sm text-text-muted">{profile?.email ?? user?.email}</p>
+                  <p className="text-sm text-slate-300">{profile?.email ?? user?.email}</p>
                   {profile?.phone && (
-                    <p className="text-sm text-text-muted">{profile.phone}</p>
+                    <p className="text-sm text-slate-300">{profile.phone}</p>
                   )}
                 </div>
-                <p className="mt-2 text-xs text-text-muted">
+                <p className="mt-2 text-xs text-slate-300">
                   <Link href="/patient/profile" className="text-primary hover:underline">
                     Update profile
                   </Link>
@@ -292,42 +292,42 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
               </>
             ) : (
               <>
-                <p className="mt-2 text-sm text-text-muted">
+                <p className="mt-2 text-sm text-slate-300">
                   Enter your contact details. No account needed.
                 </p>
                 <div className="mt-4 space-y-4">
                   <div>
-                    <label htmlFor="guest-name" className="block text-sm font-medium text-text">Full name *</label>
+                    <label htmlFor="guest-name" className="block text-sm font-medium text-white">Full name *</label>
                     <input
                       id="guest-name"
                       type="text"
                       required
                       value={guestName}
                       onChange={(e) => setGuestName(e.target.value)}
-                      className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                      className="input-glass mt-1"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
-                    <label htmlFor="guest-email" className="block text-sm font-medium text-text">Email *</label>
+                    <label htmlFor="guest-email" className="block text-sm font-medium text-white">Email *</label>
                     <input
                       id="guest-email"
                       type="email"
                       required
                       value={guestEmail}
                       onChange={(e) => setGuestEmail(e.target.value)}
-                      className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                      className="input-glass mt-1"
                       placeholder="your@email.com"
                     />
                   </div>
                   <div>
-                    <label htmlFor="guest-phone" className="block text-sm font-medium text-text">Phone (optional)</label>
+                    <label htmlFor="guest-phone" className="block text-sm font-medium text-white">Phone (optional)</label>
                     <input
                       id="guest-phone"
                       type="tel"
                       value={guestPhone}
                       onChange={(e) => setGuestPhone(e.target.value)}
-                      className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                      className="input-glass mt-1"
                       placeholder="(555) 000-0000"
                     />
                   </div>
@@ -335,12 +335,12 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
               </>
             )}
             <div className="mt-4">
-              <label className="block text-sm font-medium text-text">Notes (optional)</label>
+              <label className="block text-sm font-medium text-white">Notes (optional)</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
-                className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                className="input-glass mt-1"
                 placeholder="Any symptoms or questions for the doctor?"
               />
             </div>
@@ -349,19 +349,19 @@ export function BookingFlow({ services, doctors }: BookingFlowProps) {
 
         {step === 5 && (
           <div>
-            <h2 className="font-semibold text-text">Confirm booking</h2>
-            <div className="mt-4 space-y-3 rounded-lg border border-slate-200 p-4">
+            <h2 className="font-semibold text-white">Confirm booking</h2>
+            <div className="mt-4 space-y-3 rounded-lg border border-white/20 p-4">
               {isGuest && (
-                <p><span className="text-text-muted">Name:</span> {guestName}</p>
+                <p><span className="text-slate-300">Name:</span> {guestName}</p>
               )}
               {isGuest && (
-                <p><span className="text-text-muted">Email:</span> {guestEmail}</p>
+                <p><span className="text-slate-300">Email:</span> {guestEmail}</p>
               )}
-              <p><span className="text-text-muted">Service:</span> {selectedService?.name}</p>
-              <p><span className="text-text-muted">Doctor:</span> {selectedDoctor?.full_name} ({selectedDoctor?.specialty})</p>
-              <p><span className="text-text-muted">Date:</span> {date && new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</p>
-              <p><span className="text-text-muted">Time:</span> {time?.slice(0, 5)}</p>
-              {notes && <p><span className="text-text-muted">Notes:</span> {notes}</p>}
+              <p><span className="text-slate-300">Service:</span> {selectedService?.name}</p>
+              <p><span className="text-slate-300">Doctor:</span> {selectedDoctor?.full_name} ({selectedDoctor?.specialty})</p>
+              <p><span className="text-slate-300">Date:</span> {date && new Date(date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</p>
+              <p><span className="text-slate-300">Time:</span> {time?.slice(0, 5)}</p>
+              {notes && <p><span className="text-slate-300">Notes:</span> {notes}</p>}
             </div>
             <button
               type="button"
