@@ -15,6 +15,9 @@ export default async function LoginSuccessPage({
     redirect("/login");
   }
   const role = (session.user as { role?: string }).role;
+  if (role === "doctor_pending") {
+    redirect("/pending-approval");
+  }
   if (role === "admin" || role === "doctor") {
     redirect("/admin/dashboard");
   }

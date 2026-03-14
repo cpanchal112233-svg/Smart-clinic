@@ -9,6 +9,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") ?? "/patient/dashboard";
+  const message = searchParams.get("message");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +48,11 @@ function LoginForm() {
         <p className="mt-1 text-sm text-slate-300">
           Enter your email and password to access your account.
         </p>
+        {message === "pending" && (
+          <div className="mt-4 rounded-lg bg-primary/20 border border-primary/40 p-3 text-sm text-slate-200">
+            Doctor application submitted. You can sign in once it&apos;s approved by the admin.
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           {error && (
             <div className="rounded-lg bg-red-500/20 border border-red-400/30 p-3 text-sm text-red-200">

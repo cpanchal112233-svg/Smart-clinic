@@ -35,9 +35,16 @@ export default function SignupPage() {
     <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
       <div className="relative z-10 mx-auto max-w-md px-4 py-16 sm:px-6">
         <div className="card">
-        <h1 className="text-2xl font-bold text-white">Create account</h1>
+        <h1 className="text-2xl font-bold text-white">Create account (Patient)</h1>
         <p className="mt-1 text-sm text-slate-300">
-          Sign up to book and manage your appointments.
+          Sign up to book and manage your appointments as a patient.
+        </p>
+        <p className="mt-2 text-xs text-slate-400">
+          Are you a doctor?{" "}
+          <Link href="/signup/doctor" className="text-primary hover:underline">
+            Apply here
+          </Link>
+          .
         </p>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           {error && (
@@ -97,6 +104,10 @@ export default function SignupPage() {
           Already have an account?{" "}
           <Link href="/login" className="font-medium text-primary hover:underline">
             Sign in
+          </Link>
+          {" · "}
+          <Link href="/signup/doctor" className="font-medium text-primary hover:underline">
+            Apply as doctor
           </Link>
         </p>
       </div>

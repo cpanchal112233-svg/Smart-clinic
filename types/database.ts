@@ -1,4 +1,4 @@
-export type UserRole = "patient" | "admin" | "doctor";
+export type UserRole = "patient" | "admin" | "doctor" | "doctor_pending";
 
 export interface Profile {
   id: string;
@@ -27,8 +27,27 @@ export interface Doctor {
   specialty: string;
   bio: string | null;
   is_available: boolean;
+  latitude: number | null;
+  longitude: number | null;
   created_at: string;
   profile?: Profile;
+}
+
+export type DoctorApplicationStatus = "pending" | "approved" | "rejected";
+
+export interface DoctorApplication {
+  id: string;
+  profile_id: string;
+  full_name: string;
+  email: string;
+  specialty: string;
+  document_urls: string[];
+  status: DoctorApplicationStatus;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  rejection_reason: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface DoctorSchedule {
