@@ -50,6 +50,12 @@ export default async function HomePage() {
               <Link href="/services" className="btn-secondary px-6 py-3 text-base">
                 View Services
               </Link>
+              <Link
+                href="/experience"
+                className="rounded-lg border border-primary/50 px-6 py-3 text-base font-medium text-primary hover:bg-primary/5 transition-colors"
+              >
+                See the experience
+              </Link>
             </div>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-text-muted">
               <span>Fast appointment booking</span>

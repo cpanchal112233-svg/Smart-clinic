@@ -7,6 +7,7 @@ import { useSession, signOut } from "next-auth/react";
 
 const publicNav = [
   { href: "/", label: "Home" },
+  { href: "/experience", label: "Experience" },
   { href: "/services", label: "Services" },
   { href: "/doctors", label: "Doctors" },
   { href: "/book", label: "Book Appointment" },
