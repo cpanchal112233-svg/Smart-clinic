@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { sql } from "@/lib/db";
 import { FALLBACK_SERVICES } from "@/lib/fallback-services";
+import HeroSplineBackground from "@/components/home/HeroSplineBackground";
 
 export const dynamic = "force-dynamic";
 
@@ -26,21 +27,37 @@ export default async function HomePage() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white px-4 py-20 sm:px-6 sm:py-28">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-text sm:text-5xl md:text-6xl">
-            Modern healthcare, made easier.
-          </h1>
-          <p className="mt-6 text-lg text-text-muted sm:text-xl">
-            Book appointments, manage visits, and stay connected through one
-            seamless clinic experience.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/book" className="btn-primary text-base px-6 py-3">
-              Book Appointment
-            </Link>
-            <Link href="/services" className="btn-secondary text-base px-6 py-3">
-              View Services
-            </Link>
+        <HeroSplineBackground scene={process.env.NEXT_PUBLIC_SPLINE_HERO_SCENE} />
+        <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-teal-200/30 blur-3xl" aria-hidden />
+        <div className="absolute right-[-5%] bottom-0 h-80 w-80 rounded-full bg-blue-200/25 blur-3xl" aria-hidden />
+
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-3xl rounded-[32px] border border-white/60 bg-white/55 px-6 py-10 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-md sm:px-10">
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.24em] text-primary">
+              SmartClinic
+            </p>
+            <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-text sm:text-5xl md:text-6xl">
+              Modern healthcare, made easier.
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-text-muted sm:text-xl">
+              Book appointments, manage visits, and stay connected through one
+              seamless clinic experience.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Link href="/book" className="btn-primary px-6 py-3 text-base">
+                Book Appointment
+              </Link>
+              <Link href="/services" className="btn-secondary px-6 py-3 text-base">
+                View Services
+              </Link>
+            </div>
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-text-muted">
+              <span>Fast appointment booking</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Clear patient experience</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Modern clinic workflow</span>
+            </div>
           </div>
         </div>
       </section>
